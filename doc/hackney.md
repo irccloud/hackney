@@ -50,31 +50,33 @@ url() = #hackney_url{}
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#body-1">body/1</a></td><td>Return the full body sent with the response.</td></tr><tr><td valign="top"><a href="#body-2">body/2</a></td><td>Return the full body sent with the response as long as the body
 length doesn't go over MaxLength.</td></tr><tr><td valign="top"><a href="#cancel_request-1">cancel_request/1</a></td><td>Extract raw informations from the client context
-This feature can be useful when you want to create a simple proxy, rerouting on the headers and the status line and continue to forward the connection for example.</td></tr><tr><td valign="top"><a href="#close-1">close/1</a></td><td>close the client.</td></tr><tr><td valign="top"><a href="#connect-1">connect/1</a></td><td></td></tr><tr><td valign="top"><a href="#connect-2">connect/2</a></td><td></td></tr><tr><td valign="top"><a href="#connect-3">connect/3</a></td><td>connect a socket and create a client state.</td></tr><tr><td valign="top"><a href="#connect-4">connect/4</a></td><td></td></tr><tr><td valign="top"><a href="#controlling_process-2">controlling_process/2</a></td><td>Assign a new controlling process <em>Pid</em> to <em>Client</em>.</td></tr><tr><td valign="top"><a href="#finish_send_body-1">finish_send_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#pause_stream-1">pause_stream/1</a></td><td>pause a response stream, the stream process will hibernate and
-be woken later by the resume function.</td></tr><tr><td valign="top"><a href="#redirect_location-1">redirect_location/1</a></td><td></td></tr><tr><td valign="top"><a href="#request-1">request/1</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-2">request/2</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-3">request/3</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-4">request/4</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-5">request/5</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#resume_stream-1">resume_stream/1</a></td><td>resume a paused response stream, the stream process will be
+This feature can be useful when you want to create a simple proxy, rerouting on the headers and the status line and continue to forward the connection for example.</td></tr><tr><td valign="top"><a href="#close-1">close/1</a></td><td>close the client.</td></tr><tr><td valign="top"><a href="#connect-1">connect/1</a></td><td></td></tr><tr><td valign="top"><a href="#connect-2">connect/2</a></td><td></td></tr><tr><td valign="top"><a href="#connect-3">connect/3</a></td><td>connect a socket and create a client state.</td></tr><tr><td valign="top"><a href="#connect-4">connect/4</a></td><td></td></tr><tr><td valign="top"><a href="#controlling_process-2">controlling_process/2</a></td><td>Assign a new controlling process <em>Pid</em> to <em>Client</em>.</td></tr><tr><td valign="top"><a href="#cookies-1">cookies/1</a></td><td></td></tr><tr><td valign="top"><a href="#finish_send_body-1">finish_send_body/1</a></td><td></td></tr><tr><td valign="top"><a href="#location-1">location/1</a></td><td>return the requested location.</td></tr><tr><td valign="top"><a href="#pause_stream-1">pause_stream/1</a></td><td>pause a response stream, the stream process will hibernate and
+be woken later by the resume function.</td></tr><tr><td valign="top"><a href="#redirect_location-1">redirect_location/1</a></td><td></td></tr><tr><td valign="top"><a href="#request-1">request/1</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-2">request/2</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-3">request/3</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-4">request/4</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request-5">request/5</a></td><td>make a request.</td></tr><tr><td valign="top"><a href="#request_info-1">request_info/1</a></td><td>get request info.</td></tr><tr><td valign="top"><a href="#resume_stream-1">resume_stream/1</a></td><td>resume a paused response stream, the stream process will be
 awoken.</td></tr><tr><td valign="top"><a href="#send_body-2">send_body/2</a></td><td>send the request body until eob.</td></tr><tr><td valign="top"><a href="#send_multipart_body-2">send_multipart_body/2</a></td><td>send a multipart body until eof
 Possible value are :
 <ul>
 <li><code>eof</code>: end the multipart request</li>
-<li><code>{Id, {File, FileName}}</code>: to stream a file</li>
-%% <li><code>{Id, {File, FileName, FileOptions}}</code>: to stream a file</li>
-<li><code>{data, {start, Id, DileName, ContentType}}</code>: to start to stream
-arbitrary binary content</li>
-<li><code>{data, Bin}`: send a binary. Use it only after emitting a
-**start**</li>
-<li>`{data, eof}`: stop sending an arbitary content. It doesn</code>t stop
-the multipart request</li>
-<li><code>{Id, {file, Filename, Content}</code>: send a full content as a
-boundary</li>
-<li><code>{Id, Value}</code>: send an arbitrary value as a boundary. Filename and
-Id are identique</li>
-</ul>
-File options can be:
-<ul>
-<li><code>{offset, Offset}</code>: start to send file from this offset</li>
-<li><code>{bytes, Bytes}</code>: number of bytes to send</li>
-<li><code>{chunk_size, ChunkSize}</code>: the size of the chunk to send</li>
-</ul></td></tr><tr><td valign="top"><a href="#send_request-2">send_request/2</a></td><td>send a request using the current client state.</td></tr><tr><td valign="top"><a href="#skip_body-1">skip_body/1</a></td><td>skip the full body.</td></tr><tr><td valign="top"><a href="#start-0">start/0</a></td><td>Start the couchbeam process.</td></tr><tr><td valign="top"><a href="#start-1">start/1</a></td><td></td></tr><tr><td valign="top"><a href="#start_response-1">start_response/1</a></td><td>start a response.</td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>Stop the couchbeam process.</td></tr><tr><td valign="top"><a href="#stop_async-1">stop_async/1</a></td><td>stop to receive asynchronously.</td></tr><tr><td valign="top"><a href="#stream_body-1">stream_body/1</a></td><td>Stream the response body.</td></tr><tr><td valign="top"><a href="#stream_next-1">stream_next/1</a></td><td>continue to the next stream message.</td></tr></table>
+<li><code>{file, Path}</code>: to stream a file</li>
+<li><code>{file, Path, ExtraHeaders}</code>: to stream a file</li>
+<li><code>{data, Name, Content}</code>: to send a full part</li>
+<li><code>{data, Name, Content, ExtraHeaders}</code>: to send a full part</li>
+<li><code>{part, Name, Len}</code>: to start sending a part with a known length in a streaming
+fashion</li>
+<li><code>{part, Name, Len, ExtraHeader}</code>: to start sending a part in a streaming
+fashion</li>
+<li><code>{part, Name}</code>: to start sending a part without length in a streaming
+fashion</li>
+<li><code>{part, Name, ExtraHeader}</code>: to start sending a part without
+lengthin a streaming  fashion</li>
+<li><code>{part_bin, Bin}</code>: To send part of part</li>
+<li><code>{part, eof}</code>: To notify the end of the part </li>
+<li><code>{mp_mixed, Name, MixedBoundary}</code>: To notify we start a part with a a mixed
+multipart content</li>
+<li><code>{mp_mixed_eof, MixedBoundary}</code>: To notify we end a part with a a mixed
+multipart content</li>
+</ul><p></p>Note: You can calculate the full length of a multipart stream using
+the function <code>hackney_multipart:len_mp_stream/2</code> .</td></tr><tr><td valign="top"><a href="#send_request-2">send_request/2</a></td><td>send a request using the current client state.</td></tr><tr><td valign="top"><a href="#send_request-3">send_request/3</a></td><td>send a request using the current client state and pass new
+options to it.</td></tr><tr><td valign="top"><a href="#setopts-2">setopts/2</a></td><td>set client options.</td></tr><tr><td valign="top"><a href="#skip_body-1">skip_body/1</a></td><td>skip the full body.</td></tr><tr><td valign="top"><a href="#skip_multipart-1">skip_multipart/1</a></td><td>Stream the response body.</td></tr><tr><td valign="top"><a href="#start-0">start/0</a></td><td>Start the hackney process.</td></tr><tr><td valign="top"><a href="#start-1">start/1</a></td><td></td></tr><tr><td valign="top"><a href="#start_response-1">start_response/1</a></td><td>start a response.</td></tr><tr><td valign="top"><a href="#stop-0">stop/0</a></td><td>Stop the hackney process.</td></tr><tr><td valign="top"><a href="#stop_async-1">stop_async/1</a></td><td>stop to receive asynchronously.</td></tr><tr><td valign="top"><a href="#stream_body-1">stream_body/1</a></td><td>Stream the response body.</td></tr><tr><td valign="top"><a href="#stream_multipart-1">stream_multipart/1</a></td><td>Stream the response body.</td></tr><tr><td valign="top"><a href="#stream_next-1">stream_next/1</a></td><td>continue to the next stream message.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -89,9 +91,7 @@ File options can be:
 <pre><code>
 body(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; {ok, binary()} | {error, atom()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 Return the full body sent with the response.
 <a name="body-2"></a>
@@ -102,9 +102,7 @@ Return the full body sent with the response.
 <pre><code>
 body(Ref::<a href="#type-client_ref">client_ref()</a>, MaxLength::non_neg_integer() | infinity) -&gt; {ok, binary()} | {error, atom()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 Return the full body sent with the response as long as the body
 length doesn't go over MaxLength.
@@ -116,9 +114,7 @@ length doesn't go over MaxLength.
 <pre><code>
 cancel_request(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; {atom(), <a href="inet.md#type-socket">inet:socket()</a>, binary(), <a href="hackney_response.md#type-response_state">hackney_response:response_state()</a>} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 
 Extract raw informations from the client context
@@ -179,11 +175,20 @@ connect a socket and create a client state.
 <pre><code>
 controlling_process(Ref::<a href="#type-client_ref">client_ref()</a>, Pid::pid()) -&gt; ok | {error, closed | not_owner | atom()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 Assign a new controlling process _Pid_ to _Client_.
+<a name="cookies-1"></a>
+
+### cookies/1 ###
+
+
+<pre><code>
+cookies(Headers::list()) -&gt; list()
+</code></pre>
+<br />
+
+
 <a name="finish_send_body-1"></a>
 
 ### finish_send_body/1 ###
@@ -191,6 +196,17 @@ Assign a new controlling process _Pid_ to _Client_.
 `finish_send_body(Ref) -> any()`
 
 
+<a name="location-1"></a>
+
+### location/1 ###
+
+
+<pre><code>
+location(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; binary()
+</code></pre>
+<br />
+
+return the requested location
 <a name="pause_stream-1"></a>
 
 ### pause_stream/1 ###
@@ -199,9 +215,7 @@ Assign a new controlling process _Pid_ to _Client_.
 <pre><code>
 pause_stream(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; ok | {error, req_not_found}
 </code></pre>
-
-<br></br>
-
+<br />
 
 pause a response stream, the stream process will hibernate and
 be woken later by the resume function
@@ -220,9 +234,7 @@ be woken later by the resume function
 <pre><code>
 request(URL::binary() | list()) -&gt; {ok, integer(), list(), #client{}} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 make a request
 <a name="request-2"></a>
@@ -233,9 +245,7 @@ make a request
 <pre><code>
 request(Method::term(), URL::binary() | list()) -&gt; {ok, integer(), list(), #client{}} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 make a request
 <a name="request-3"></a>
@@ -246,9 +256,7 @@ make a request
 <pre><code>
 request(Method::term(), URL::binary() | list(), Headers::list()) -&gt; {ok, integer(), list(), #client{}} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 make a request
 <a name="request-4"></a>
@@ -259,9 +267,7 @@ make a request
 <pre><code>
 request(Method::term(), URL::binary() | list(), Headers::list(), Body::term()) -&gt; {ok, integer(), list(), #client{}} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 make a request
 <a name="request-5"></a>
@@ -272,9 +278,7 @@ make a request
 <pre><code>
 request(Method::term(), Hackney_url::<a href="#type-url">url()</a> | binary(), Headers::list(), Body::term(), Options0::list()) -&gt; {ok, integer(), list(), <a href="#type-client_ref">client_ref()</a>} | {ok, <a href="#type-client_ref">client_ref()</a>} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 
 make a request
@@ -318,33 +322,41 @@ see the gen_tcp options.
 module.
 
 
-* async: receive the response asynchronously
-The function return {ok, {response_stream, StreamRef}}.
-When {async, once} is used the socket will receive only once. To
+* `async`: receive the response asynchronously
+The function return {ok, StreamRef}.
+When {async, once} is used the response will be received only once. To
 receive the other messages use the function
 `hackney:stream_next/1`
 
 
+* `{stream_to, pid()}`: If async is true or once, the response
+messages will be sent to this PID.
+
+
+* `{cookie, list() | binary()}` : to set a cookie or a
+list of cookies.
+
+
 * _Others options are_:
 
-* {follow_redirect, boolean}: false by default, follow a
+* `{follow_redirect, boolean}`: false by default, follow a
 redirection
 
-* {max_redirect, integer}: 5 by default, the maximum of
+* `{max_redirect, integer}`: 5 by default, the maximum of
 redirection for a request
 
-* {force_redirect, boolean}: false by default, to force the
+* `{force_redirect, boolean}`: false by default, to force the
 redirection even on POST
 
-* {proxy, proxy_options()}: to connect via a proxy.
+* `{proxy, proxy_options()}`: to connect via a proxy.
 
-* insecure: to perform "insecure" SSL connections and
+* `insecure`: to perform "insecure" SSL connections and
 transfers without checking the certificate
 
-* {connect_timeout, infinity | integer()}: timeout used when
+* `{connect_timeout, infinity | integer()}`: timeout used when
 estabilishing a connection, in milliseconds. Default is 8000
 
-* {recv_timeout, infinity | integer()}: timeout used when
+* `{recv_timeout, infinity | integer()}`: timeout used when
 receiving a connection. Default is infinity
 
 
@@ -374,6 +386,13 @@ proxy
 * {Host::binary(), Port::binary}: Host and port to connect,
 for HTTP proxy
 
+* {socks5, Host::binary(), Port::binary()}: Host and Port
+to connect to a socks5 proxt.
+
+* {connect, Host::binary(), Port::binary()}: Host and Port
+to connect to an HTTP tunnel.
+
+
 
 
 
@@ -384,6 +403,37 @@ for HTTP proxy
 also do `hackney:Method(...)` if you prefer to use the REST
 syntax.</bloquote>
 
+
+
+Return:
+
+* `{ok, ResponseStatus, ResponseHeaders, Ref}`: when
+the response succeded. The request reference is used later to
+retrieve the body.
+
+* `{ok, Ref}` Return the request reference when you
+decide to stream the requet. You can use the returned reference to
+stream the request body and continue to handle the response.
+
+* `{error, {closed, PartialBody}}` A body was expected but
+instead the remote closed the response after sending the headers.
+Equivalent to the curl  message `no chunk, no close, no size.
+Assume close to signal end`.
+
+* `{error, term()}` other errors.
+
+
+<a name="request_info-1"></a>
+
+### request_info/1 ###
+
+
+<pre><code>
+request_info(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; list()
+</code></pre>
+<br />
+
+get request info
 <a name="resume_stream-1"></a>
 
 ### resume_stream/1 ###
@@ -392,9 +442,7 @@ syntax.</bloquote>
 <pre><code>
 resume_stream(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; ok | {error, req_not_found}
 </code></pre>
-
-<br></br>
-
+<br />
 
 resume a paused response stream, the stream process will be
 awoken
@@ -406,9 +454,7 @@ awoken
 <pre><code>
 send_body(Ref::<a href="#type-client_ref">client_ref()</a>, Body::term()) -&gt; ok | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 send the request body until eob. It's issued after sending a request using
 the `request` and `send_request` functions.
@@ -420,43 +466,47 @@ the `request` and `send_request` functions.
 <pre><code>
 send_multipart_body(Ref::<a href="#type-client_ref">client_ref()</a>, Body::term()) -&gt; ok | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 send a multipart body until eof
 Possible value are :
 
 * `eof`: end the multipart request
 
-* `{Id, {File, FileName}}`: to stream a file
+* `{file, Path}`: to stream a file
 
-%% * `{Id, {File, FileName, FileOptions}}`: to stream a file
+* `{file, Path, ExtraHeaders}`: to stream a file
 
-* `{data, {start, Id, DileName, ContentType}}`: to start to stream
-arbitrary binary content
+* `{data, Name, Content}`: to send a full part
 
-* `{data, Bin}`: send a binary. Use it only after emitting a
-**start**</li>
-<li>`{data, eof}`: stop sending an arbitary content. It doesn`t stop
-the multipart request
+* `{data, Name, Content, ExtraHeaders}`: to send a full part
 
-* `{Id, {file, Filename, Content}`: send a full content as a
-boundary
+* `{part, Name, Len}`: to start sending a part with a known length in a streaming
+fashion
 
-* `{Id, Value}`: send an arbitrary value as a boundary. Filename and
-Id are identique
+* `{part, Name, Len, ExtraHeader}`: to start sending a part in a streaming
+fashion
+
+* `{part, Name}`: to start sending a part without length in a streaming
+fashion
+
+* `{part, Name, ExtraHeader}`: to start sending a part without
+lengthin a streaming  fashion
+
+* `{part_bin, Bin}`: To send part of part
+
+* `{part, eof}`: To notify the end of the part
+
+* `{mp_mixed, Name, MixedBoundary}`: To notify we start a part with a a mixed
+multipart content
+
+* `{mp_mixed_eof, MixedBoundary}`: To notify we end a part with a a mixed
+multipart content
 
 
-File options can be:
 
-* `{offset, Offset}`: start to send file from this offset
-
-* `{bytes, Bytes}`: number of bytes to send
-
-* `{chunk_size, ChunkSize}`: the size of the chunk to send
-
-
+Note: You can calculate the full length of a multipart stream using
+the function `hackney_multipart:len_mp_stream/2` .
 <a name="send_request-2"></a>
 
 ### send_request/2 ###
@@ -464,6 +514,37 @@ File options can be:
 `send_request(Ref, Req) -> any()`
 
 send a request using the current client state
+<a name="send_request-3"></a>
+
+### send_request/3 ###
+
+`send_request(Ref, Req, Options) -> any()`
+
+send a request using the current client state and pass new
+options to it.
+<a name="setopts-2"></a>
+
+### setopts/2 ###
+
+
+<pre><code>
+setopts(Ref::<a href="#type-client_ref">client_ref()</a>, Options::list()) -&gt; ok
+</code></pre>
+<br />
+
+set client options.
+Options are:
+- `async`: to fetch the response asynchronously
+- `{async, once}`: to receive the response asynchronosly once time.
+To receive the next message use the function `hackney:stream_next/1`.
+- `{stream_to, pid()}`: to set the pid where the messages of an
+asynchronous response will be sent.
+- `{follow_redirect, bool()}` : if true a redirection will be
+followed when the response is received synchronously
+- `{force_redirect, bool()}` : if true a 301/302 redirection will be
+followed even on POST.
+- `{max_redirect, integer()}` the maximum number of redirections that
+will be followed
 <a name="skip_body-1"></a>
 
 ### skip_body/1 ###
@@ -472,18 +553,27 @@ send a request using the current client state
 <pre><code>
 skip_body(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; ok | {error, atom()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 skip the full body. (read all the body if needed).
+<a name="skip_multipart-1"></a>
+
+### skip_multipart/1 ###
+
+
+<pre><code>
+skip_multipart(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; ok | {error, term()}
+</code></pre>
+<br />
+
+Stream the response body.
 <a name="start-0"></a>
 
 ### start/0 ###
 
 `start() -> any()`
 
-Start the couchbeam process. Useful when testing using the shell.
+Start the hackney process. Useful when testing using the shell.
 <a name="start-1"></a>
 
 ### start/1 ###
@@ -499,9 +589,7 @@ Start the couchbeam process. Useful when testing using the shell.
 <pre><code>
 start_response(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; {ok, integer(), list(), <a href="#type-client_ref">client_ref()</a>} | {ok, <a href="#type-client_ref">client_ref()</a>} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 start a response.
 Useful if you stream the body by yourself. It will fetch the status
@@ -512,7 +600,7 @@ and headers of the response. and return
 
 `stop() -> any()`
 
-Stop the couchbeam process. Useful when testing using the shell.
+Stop the hackney process. Useful when testing using the shell.
 <a name="stop_async-1"></a>
 
 ### stop_async/1 ###
@@ -521,9 +609,7 @@ Stop the couchbeam process. Useful when testing using the shell.
 <pre><code>
 stop_async(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; ok | {error, req_not_found} | {error, term()}
 </code></pre>
-
-<br></br>
-
+<br />
 
 stop to receive asynchronously.
 <a name="stream_body-1"></a>
@@ -532,13 +618,40 @@ stop to receive asynchronously.
 
 
 <pre><code>
-stream_body(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; ok | stop | {error, term()}
+stream_body(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; {ok, binary()} | done | {error, term()}
 </code></pre>
+<br />
 
-<br></br>
+Stream the response body.
+<a name="stream_multipart-1"></a>
+
+### stream_multipart/1 ###
+
+
+<pre><code>
+stream_multipart(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; {headers, list()} | {body, binary()} | eof | end_of_part | {error, term()}
+</code></pre>
+<br />
 
 
 Stream the response body.
+
+
+Return:
+
+* `{headers, Headers}`: the part headers
+
+* `{body, Bin}`: part of the content
+
+* `end_of_part` : end of part
+
+* `mp_mixed`: notify the begininning of a mixed multipart part
+
+* `mp_mixed_eof`: notify the end  of a mixed multipart part
+
+* `eof`: notify the end of the nultipart request
+
+
 <a name="stream_next-1"></a>
 
 ### stream_next/1 ###
@@ -547,9 +660,7 @@ Stream the response body.
 <pre><code>
 stream_next(Ref::<a href="#type-client_ref">client_ref()</a>) -&gt; ok | {error, req_not_found}
 </code></pre>
-
-<br></br>
-
+<br />
 
 continue to the next stream message. Only use it when
 `{async, once}` is set in the client options.

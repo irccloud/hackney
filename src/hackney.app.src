@@ -4,7 +4,7 @@
 {application, hackney,
     [
         {description, "simple HTTP client"},
-        {vsn, "0.8.3"},
+        {vsn, "0.13.0"},
         {registered, [hackney_pool]},
         {applications, [kernel,
                         stdlib,
@@ -12,7 +12,7 @@
                         asn1,
                         public_key,
                         ssl,
-                        mimetypes]},
+                        idna]},
         {included_applications, []},
         {mod, { hackney_app, []}},
         {env, [{timeout, 150000},

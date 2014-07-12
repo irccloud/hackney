@@ -1,5 +1,128 @@
 # NEWS
 
+0.13.0 - 2014/07/08
+-------------------
+
+- put hackney_lib back in the source code and refactor the source repository
+- fix: handle bad socks5 proxy response
+  [#113](http://github.com/benoitc/hackney/issues/113)
+- fix: handle timeout in hackney_socks4:connect/5
+  [#112](http://github.com/benoitc/hackney/issues/112)
+- fix: Accept inet6 tcp option for ssl
+- fix redirection
+- fix: add versions option for ssl
+
+0.12.1 - 2014/04/18
+-------------------
+
+- fix: return the full body on closed connections.
+- fix: make sure to always pass the Host header.
+
+0.12.0 - 2014/04/18
+-------------------
+
+- improvement: URI encoding is now fully normalized.
+- improvement: TCP_NODELAY is now available by default for all transports
+- improvements: IDNA parsing is only done during the normalization which
+  makes all the connections faster..
+- fix: connections options are now correctly passed to the transports.
+- fix: HTTP proxying. make sure we reuse the connection
+- fix: HTTP proxying, only resolve the proxy domain.
+- bump [hackney_lib](https://github.com/benoitc/hackney_lib) to 0.3.0
+
+### Breaking change:
+
+the [mimetypes](https://github.com/spawngrid/mimetypes) has been
+replaced by the
+[hackney_mimetypes](https://github.com/benoitc/hackney_lib/blob/master/doc/hackney_mimetypes.md)
+module. It makes content-type detection a little more efficient. In the
+process the functions `hackney_util:content_type/1` and
+`hackney_bstr:content_type/1` has been removed. You should now use the
+function `hackney_mimetypes:filename/1` .
+
+
+
+0.11.2 - 2014/04/15
+-------------------
+
+- new improved and more performant IDNA support
+- make sure the socket is closed when we skip the body if needed
+- fix multipart EOF parsing
+- make sure we finish a multipart stream
+- bump hackney_lib to 0.2.5
+- enable TCP_NODELAY by default. (To disable, pass the option
+  `{nodelay, false} to `connect_options`.
+
+0.11.1 - 2014/03/03
+-------------------
+
+- improvement: speed IDNA domains handing
+- fix http proxy via CONNECT
+- fix: encode the path
+- bump to [hackney_lib 0.2.4](https://github.com/benoitc/hackney_lib/releases/tag/0.2.4)
+
+0.11.0 - 2014/03/02
+-------------------
+
+- add `hackney:location/1` to get the final location
+- make `hackney_request:send/2` more efficient
+- fix socket removing in the pool
+- fix [HTTP proxying](https://github.com/benoitc/hackney/commit/a21e8802e1dc91c25d863ac6fc5b23a79196efcd)
+- support IDNA hostnames
+
+0.10.1 - 2013/12/30
+-------------------
+
+- fix multipart file header
+- improve the performance when sending a `{multipart, Parts}` body. Send
+  it as a stream.
+- bump hackney_lib version to 0.2.2
+
+0.10.0 - 2013/12/29
+-------------------
+
+- improve multipart handling: With this change, we can now calculate the
+  full multipart stream content-length using `hackney_multipart:len_mp_stream/2` .
+- add `hackney:setopts/2` to set options to a request when reusing it.
+- add `hackney:send_reques/3` to pass new options to a request.
+- add the `{stream_to, Pid}` setting to a request to send the messages
+  from an asynchronous response to another PID.
+- fix `Host` header: some server do not comply well with the spec and
+  fail to parse the port when they are listening on 80 or 443. This
+change fix it.
+- fix: make sure we are re-using connections with asynchronous
+  responses.
+
+### Breaking changes:
+
+- All messages from an async response are now under the
+  format `{hackney_response, Ref, ... }` to distinct hackney messages
+from others in a process easily.
+- You can only make an async response at a time. Ie if you are are doing
+  a persistent request (reusing the same reference) you will need to
+pass the async option again to the request. For that purpose the
+functions hackney:send_request/3 and hackney:setopts/2 have been
+added.
+- multipart messages have changed. See the documentation for more
+  information.
+
+0.9.1 - 2013/12/20
+------------------
+
+- fix response multipart processing
+
+0.9.0 - 2013/12/19
+------------------
+
+- add support for multipart responses
+- add support for cookies: There is now a `cookie`
+option that can be passed to the request. It can be a sinle cookie or a
+list of cookies. To parse cookies from the response a function `hackney:cookies/1` has
+been added. It return all the cookies as a list of [{Key, Value}].
+- breaking change: use [hackney_lib](http://github.com/benoitc/hackney_lib)  a web toolkit to handle the HTTP protocol and other manipulations.
+- optimization: send body and headers together when it is possible
+- fix release handling
+
 0.8.3 - 2013/12/07
 ------------------
 

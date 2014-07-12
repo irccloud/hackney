@@ -32,7 +32,7 @@ qs_vals() = [{binary(), binary() | true}]
 
 
 <table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#fix_path-1">fix_path/1</a></td><td></td></tr><tr><td valign="top"><a href="#make_url-3">make_url/3</a></td><td> construct an url from a base url, a path and a list of
-properties to give to the url.</td></tr><tr><td valign="top"><a href="#parse_qs-1">parse_qs/1</a></td><td></td></tr><tr><td valign="top"><a href="#parse_url-1">parse_url/1</a></td><td>Parse an url and return a #hackney_url record.</td></tr><tr><td valign="top"><a href="#qs-1">qs/1</a></td><td>encode query properties to binary.</td></tr><tr><td valign="top"><a href="#transport_scheme-1">transport_scheme/1</a></td><td></td></tr><tr><td valign="top"><a href="#unparse_url-1">unparse_url/1</a></td><td></td></tr><tr><td valign="top"><a href="#urldecode-1">urldecode/1</a></td><td>Decode a URL encoded binary.</td></tr><tr><td valign="top"><a href="#urldecode-2">urldecode/2</a></td><td>Decode a URL encoded binary.</td></tr><tr><td valign="top"><a href="#urlencode-1">urlencode/1</a></td><td>URL encode a string binary.</td></tr><tr><td valign="top"><a href="#urlencode-2">urlencode/2</a></td><td>URL encode a string binary.</td></tr></table>
+properties to give to the url.</td></tr><tr><td valign="top"><a href="#normalize-1">normalize/1</a></td><td>Normalizes the encoding of a Url.</td></tr><tr><td valign="top"><a href="#parse_qs-1">parse_qs/1</a></td><td></td></tr><tr><td valign="top"><a href="#parse_url-1">parse_url/1</a></td><td>Parse an url and return a #hackney_url record.</td></tr><tr><td valign="top"><a href="#pathencode-1">pathencode/1</a></td><td>encode a URL path.</td></tr><tr><td valign="top"><a href="#qs-1">qs/1</a></td><td>encode query properties to binary.</td></tr><tr><td valign="top"><a href="#transport_scheme-1">transport_scheme/1</a></td><td></td></tr><tr><td valign="top"><a href="#unparse_url-1">unparse_url/1</a></td><td></td></tr><tr><td valign="top"><a href="#urldecode-1">urldecode/1</a></td><td>Decode a URL encoded binary.</td></tr><tr><td valign="top"><a href="#urldecode-2">urldecode/2</a></td><td>Decode a URL encoded binary.</td></tr><tr><td valign="top"><a href="#urlencode-1">urlencode/1</a></td><td>URL encode a string binary.</td></tr><tr><td valign="top"><a href="#urlencode-2">urlencode/2</a></td><td>URL encode a string binary.</td></tr></table>
 
 
 <a name="functions"></a>
@@ -54,12 +54,17 @@ properties to give to the url.</td></tr><tr><td valign="top"><a href="#parse_qs-
 <pre><code>
 make_url(Url::binary(), Path::binary() | [binary()], Query::binary() | <a href="#type-qs_vals">qs_vals()</a>) -&gt; binary()
 </code></pre>
-
-<br></br>
-
+<br />
 
  construct an url from a base url, a path and a list of
 properties to give to the url.
+<a name="normalize-1"></a>
+
+### normalize/1 ###
+
+`normalize(Url) -> any()`
+
+Normalizes the encoding of a Url
 <a name="parse_qs-1"></a>
 
 ### parse_qs/1 ###
@@ -68,9 +73,7 @@ properties to give to the url.
 <pre><code>
 parse_qs(Bin::binary()) -&gt; <a href="#type-qs_vals">qs_vals()</a>
 </code></pre>
-
-<br></br>
-
+<br />
 
 
 <a name="parse_url-1"></a>
@@ -81,11 +84,22 @@ parse_qs(Bin::binary()) -&gt; <a href="#type-qs_vals">qs_vals()</a>
 <pre><code>
 parse_url(URL::binary() | list()) -&gt; <a href="#type-hackney_url">hackney_url()</a>
 </code></pre>
-
-<br></br>
-
+<br />
 
 Parse an url and return a #hackney_url record.
+<a name="pathencode-1"></a>
+
+### pathencode/1 ###
+
+
+<pre><code>
+pathencode(Bin::binary()) -&gt; binary()
+</code></pre>
+<br />
+
+Equivalent to [`pathencode(Bin, [])`](#pathencode-2).
+
+encode a URL path
 <a name="qs-1"></a>
 
 ### qs/1 ###
@@ -94,9 +108,7 @@ Parse an url and return a #hackney_url record.
 <pre><code>
 qs(KVs::<a href="#type-qs_vals">qs_vals()</a>) -&gt; binary()
 </code></pre>
-
-<br></br>
-
+<br />
 
 encode query properties to binary
 <a name="transport_scheme-1"></a>
@@ -121,9 +133,7 @@ encode query properties to binary
 <pre><code>
 urldecode(Bin::binary()) -&gt; binary()
 </code></pre>
-
-<br></br>
-
+<br />
 
 Equivalent to [`urldecode(Bin, crash)`](#urldecode-2).
 
@@ -136,9 +146,7 @@ Decode a URL encoded binary.
 <pre><code>
 urldecode(Bin::binary(), OnError::crash | skip) -&gt; binary()
 </code></pre>
-
-<br></br>
-
+<br />
 
 Decode a URL encoded binary.
 The second argument specifies how to handle percent characters that are not
@@ -150,13 +158,9 @@ if `crash` is used the function will fail with the reason `badarg`.
 
 
 <pre><code>
-urlencode(Bin::binary()) -&gt; binary()
+urlencode(Bin::binary() | string()) -&gt; binary()
 </code></pre>
-
-<br></br>
-
-
-Equivalent to [`urlencode(Bin, [])`](#urlencode-2).
+<br />
 
 URL encode a string binary.
 <a name="urlencode-2"></a>
@@ -165,11 +169,9 @@ URL encode a string binary.
 
 
 <pre><code>
-urlencode(Bin::binary(), Opts::[noplus | upper]) -&gt; binary()
+urlencode(Bin::binary() | string(), Opts::[noplus | upper]) -&gt; binary()
 </code></pre>
-
-<br></br>
-
+<br />
 
 URL encode a string binary.
 The `noplus` option disables the default behaviour of quoting space

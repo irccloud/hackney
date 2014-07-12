@@ -2,9 +2,9 @@
 
 # hackney - HTTP client library in Erlang #
 
-Copyright (c) 2012-2013 Benoît Chesneau.
+Copyright (c) 2012-2014 Benoît Chesneau.
 
-__Version:__ 0.8.3
+__Version:__ 0.13.0
 
 # hackney
 
@@ -27,9 +27,30 @@ Main features:
 - Optional socket pool
 - REST syntax: `hackney:Method(URL)` (where a method can be get, post, put, delete, ...)
 
-Note: This is a work in progress, see the
+Hackney use [hackney_lib](http://github.com/benoitc/hackney_lib) to
+handle any web protocols. If you want to manipulate headers, cookies,
+multipart or any other thing related to web protocols this is the place
+to go.
+
+> Note: This is a work in progress, see the
 [TODO](http://github.com/benoitc/hackney/blob/master/TODO.md) for more
 informations on what still need to be done.
+
+#### Useful modules are:
+
+- [`hackney`](http://github.com/benoitc/hackney/blob/master/doc/hackney.md): main module. It contains all HTTP client functions.
+- [`hackney_http`](http://github.com/benoitc/hackney/blob/master/doc/hackney_http.md): HTTP parser in pure Erlang. This parser is able
+to parse HTTP responses and requests in a streaming fashion. If not set
+it will be autodetect if it's a request or a response if needed.
+
+- [`hackney_headers`](http://github.com/benoitc/hackney/blob/master/doc/hackney_headers.md) Module to manipulate HTTP headers
+- [`hackney_cookie`](http://github.com/benoitc/hackney/blob/master/doc/hackney_cookie.md): Module to manipulate cookies.
+- [`hackney_multipart`](http://github.com/benoitc/hackney/blob/master/doc/hackney_multipart.md): Module to encode/decode multipart.
+- [`hackney_url`](http://github.com/benoitc/hackney/blob/master/doc/hackney_url.md): Module to parse and create URIs.
+- [`hackney_date`](http://github.com/benoitc/hackney/blob/master/doc/hackney_date.md): Module to parse HTTP dates.
+
+Read the [NEWS](https://raw.github.com/benoitc/hackney/master/NEWS.md) file
+to get last changelog.
 
 ## Installation
 
@@ -129,6 +150,9 @@ read_body(MaxLength, Ref, Acc) when MaxLength > byte_size(Acc) ->
 	end.
 ```
 
+> Note: you can also fetch a multipart response using the functions
+> `hackney:stream_multipart/1` and  `hackney:skip_multipart/1`.
+
 ### Reuse a connection
 
 By default all connections are created and closed dynamically by
@@ -141,7 +165,7 @@ couple of request.
 #### To create a connection:
 
 ```
-Transport = hackney_tcp_protocol,
+Transport = hackney_tcp_transport,
 Host = << "https://friendpaste.com" >>,
 Port = 443,
 Options = [],
@@ -177,8 +201,17 @@ hackney helps you send different payloads by passing different terms as
 the request body:
 
 - `{form, PropList}` : To send a form
-- `{multipart, KVs}` : to send you body using the multipart API. KVs can
-  be formatted as `{file, Name, Content}` or `Value`
+- `{multipart, Parts}` : to send you body using the multipart API. Parts
+  follow this format:
+  - `eof`: end the multipart request
+  - `{file, Path}`: to stream a file
+  - `{file, Path, ExtraHeaders}`: to stream a file
+  - `{Name, Content}`: to send a full part
+  - `{Name, Content, ExtraHeaders}`: to send a full part
+  - `{mp_mixed, Name, MixedBoundary}`: To notify we start a part with a
+    a mixed multipart content
+  - `{mp_mixed_eof, MixedBoundary}`: To notify we end a part with a a
+    mixed multipart content
 - `{file, File}` : To send a file
 - Bin: To send a binary or an iolist
 
@@ -215,6 +248,9 @@ ok  = hackney:send_body(ClientRef, ReqBody),
 {ok, Body} = hackney:body(ClientRef),
 ```
 
+> Note: to send a **multipart** body  in a streaming fashion use the
+> `hackney:sen_multipart_body/2` function.
+
 ### Get a response asynchronously
 
 Since the 0.6 version, hackney is able to fetch the response
@@ -225,16 +261,16 @@ Url = <<"https://friendpaste.com/_all_languages">>,
 Opts = [async],
 LoopFun = fun(Loop, Ref) ->
         receive
-            {Ref, {status, StatusInt, Reason}} ->
+            {hackney_response, Ref, {status, StatusInt, Reason}} ->
                 io:format("got status: ~p with reason ~p~n", [StatusInt,
                                                               Reason]),
                 Loop(Loop, Ref);
-            {Ref, {headers, Headers}} ->
+            {hackney_response, Ref, {headers, Headers}} ->
                 io:format("got headers: ~p~n", [Headers]),
                 Loop(Loop, Ref);
-            {Ref, done} ->
+            {hackney_response, Ref, done} ->
                 ok;
-            {Ref, Bin} ->
+            {hackney_response, Ref, Bin} ->
                 io:format("got chunk: ~p~n", [Bin]),
                 Loop(Loop, Ref);
 
@@ -257,12 +293,14 @@ LoopFun(LoopFun, ClientRef).
 > synchronously using the function `hackney:stop_async/1` See the
 > example [test_async_once2](https://github.com/benoitc/hackney/blob/master/examples/test_async_once2.erl) for the usage.
 
-> **Note 4**:  Asynchronous responses automatically checkout the socket
-> at the end. When the option `{following_redirect, true}` is passed to
+> **Note 4**:  When the option `{following_redirect, true}` is passed to
 > the request, you will receive the folllowing messages on valid
 > redirection:
 > - `{redirect, To, Headers}`
 > - `{see_other, To, Headers}` for status 303 and POST requests.
+
+> **Note 5**: You can send the messages to another process by using the
+> option `{stream_to, Pid}` .
 
 ### Use the default pool
 
@@ -288,12 +326,12 @@ you to maintain a group of connections.
 
 ```
 PoolName = mypool,
-Options = [{timeout, 150000}, {pool_size, 100}],
-{ok, Pid} = hackney_pool:start_pool(PoolName, Options),
+Options = [{timeout, 150000}, {max_connections, 100}],
+ok = hackney_pool:start_pool(PoolName, Options),
 ```
 
 `timeout` is the time we keep the connection alive in the pool,
-`pool_size` is the number of connections maintained in the pool. Each
+`max_connections` is the number of connections maintained in the pool. Each
 connection in a pool is monitored and closed connections are removed
 automatically.
 
@@ -341,7 +379,7 @@ Method = get,
 URL = "http://friendpaste.com/",
 ReqHeaders = [{<<"accept-encoding">>, <<"identity">>}],
 ReqBody = <<>>,
-Options = [{follow_redirect, true}, {max_redirect, true}],
+Options = [{follow_redirect, true}, {max_redirect, 5}],
 {ok, S, H, Ref} = hackney:request(Method, URL, ReqHeaders,
                                      ReqBody, Options),
 {ok, Body1} = hackney:body(Ref).
@@ -391,11 +429,17 @@ $ make devclean ; # clean all files
 <table width="100%" border="0" summary="list of modules">
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney.md" class="module">hackney</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_app.md" class="module">hackney_app</a></td></tr>
+<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_bstr.md" class="module">hackney_bstr</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_connect.md" class="module">hackney_connect</a></td></tr>
+<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_cookie.md" class="module">hackney_cookie</a></td></tr>
+<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_date.md" class="module">hackney_date</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_deps.md" class="module">hackney_deps</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_headers.md" class="module">hackney_headers</a></td></tr>
-<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_http_proxy.md" class="module">hackney_http_proxy</a></td></tr>
+<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_http.md" class="module">hackney_http</a></td></tr>
+<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_http_connect.md" class="module">hackney_http_connect</a></td></tr>
+<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_idna.md" class="module">hackney_idna</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_manager.md" class="module">hackney_manager</a></td></tr>
+<tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_mimetypes.md" class="module">hackney_mimetypes</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_multipart.md" class="module">hackney_multipart</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_pool.md" class="module">hackney_pool</a></td></tr>
 <tr><td><a href="http://github.com/benoitc/hackney/blob/master/doc/hackney_pool_handler.md" class="module">hackney_pool_handler</a></td></tr>

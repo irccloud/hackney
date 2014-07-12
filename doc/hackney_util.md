@@ -10,58 +10,30 @@
 ## Function Index ##
 
 
-<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#char_to_lower-1">char_to_lower/1</a></td><td>Convert [A-Z] characters to lowercase.</td></tr><tr><td valign="top"><a href="#char_to_upper-1">char_to_upper/1</a></td><td>Convert [a-z] characters to uppercase.</td></tr><tr><td valign="top"><a href="#content_type-1">content_type/1</a></td><td></td></tr><tr><td valign="top"><a href="#is_ipv6-1">is_ipv6/1</a></td><td></td></tr><tr><td valign="top"><a href="#join-2">join/2</a></td><td></td></tr><tr><td valign="top"><a href="#maybe_apply_defaults-2">maybe_apply_defaults/2</a></td><td></td></tr><tr><td valign="top"><a href="#require-1">require/1</a></td><td>Start the given applications if they were not already started.</td></tr><tr><td valign="top"><a href="#to_binary-1">to_binary/1</a></td><td></td></tr><tr><td valign="top"><a href="#to_hex-1">to_hex/1</a></td><td></td></tr><tr><td valign="top"><a href="#to_lower-1">to_lower/1</a></td><td>Convert a binary string to lowercase.</td></tr><tr><td valign="top"><a href="#to_upper-1">to_upper/1</a></td><td></td></tr><tr><td valign="top"><a href="#token-2">token/2</a></td><td>Parse a token.</td></tr><tr><td valign="top"><a href="#token_ci-2">token_ci/2</a></td><td>Parse a case-insensitive token.</td></tr></table>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#filter_options-3">filter_options/3</a></td><td>filter a proplists and only keep allowed keys.</td></tr><tr><td valign="top"><a href="#is_ipv6-1">is_ipv6/1</a></td><td></td></tr><tr><td valign="top"><a href="#maybe_apply_defaults-2">maybe_apply_defaults/2</a></td><td></td></tr><tr><td valign="top"><a href="#require-1">require/1</a></td><td>Start the given applications if they were not already started.</td></tr><tr><td valign="top"><a href="#set_option_default-3">set_option_default/3</a></td><td>set the default options in a proplists if not defined.</td></tr></table>
 
 
 <a name="functions"></a>
 
 ## Function Details ##
 
-<a name="char_to_lower-1"></a>
+<a name="filter_options-3"></a>
 
-### char_to_lower/1 ###
-
-
-<pre><code>
-char_to_lower(Ch::char()) -&gt; char()
-</code></pre>
-
-<br></br>
-
-
-Convert [A-Z] characters to lowercase.
-<a name="char_to_upper-1"></a>
-
-### char_to_upper/1 ###
+### filter_options/3 ###
 
 
 <pre><code>
-char_to_upper(Ch::char()) -&gt; char()
+filter_options(Tail::[{atom(), any()} | {raw, any(), any(), any()}], AllowedKeys::[atom()], Acc) -&gt; Acc
 </code></pre>
 
-<br></br>
+<ul class="definitions"><li><code>Acc = [any()]</code></li></ul>
 
-
-Convert [a-z] characters to uppercase.
-<a name="content_type-1"></a>
-
-### content_type/1 ###
-
-`content_type(Name) -> any()`
-
-
+filter a proplists and only keep allowed keys
 <a name="is_ipv6-1"></a>
 
 ### is_ipv6/1 ###
 
 `is_ipv6(Host) -> any()`
-
-
-<a name="join-2"></a>
-
-### join/2 ###
-
-`join(L, Separator) -> any()`
 
 
 <a name="maybe_apply_defaults-2"></a>
@@ -79,72 +51,18 @@ Convert [a-z] characters to uppercase.
 <pre><code>
 require(Rest::[module()]) -&gt; ok
 </code></pre>
-
-<br></br>
-
+<br />
 
 Start the given applications if they were not already started.
-<a name="to_binary-1"></a>
+<a name="set_option_default-3"></a>
 
-### to_binary/1 ###
-
-`to_binary(V) -> any()`
-
-
-<a name="to_hex-1"></a>
-
-### to_hex/1 ###
-
-`to_hex(Bin) -> any()`
-
-
-<a name="to_lower-1"></a>
-
-### to_lower/1 ###
+### set_option_default/3 ###
 
 
 <pre><code>
-to_lower(L::binary()) -&gt; binary()
+set_option_default(Opts, Key::atom(), Value::any()) -&gt; Opts
 </code></pre>
 
-<br></br>
+<ul class="definitions"><li><code>Opts = [{atom(), any()}]</code></li></ul>
 
-
-Convert a binary string to lowercase.
-<a name="to_upper-1"></a>
-
-### to_upper/1 ###
-
-`to_upper(U) -> any()`
-
-
-<a name="token-2"></a>
-
-### token/2 ###
-
-
-<pre><code>
-token(Data::binary(), Fun::function()) -&gt; any()
-</code></pre>
-
-<br></br>
-
-
-Parse a token.
-<a name="token_ci-2"></a>
-
-### token_ci/2 ###
-
-
-<pre><code>
-token_ci(Data::binary(), Fun::function()) -&gt; any()
-</code></pre>
-
-<br></br>
-
-
-
-Parse a case-insensitive token.
-
-
-Changes all characters to lowercase.
+set the default options in a proplists if not defined

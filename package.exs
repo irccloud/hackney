@@ -1,6 +1,6 @@
 Expm.Package.new(name: "hackney", description: "Simple HTTP client in Erlang",
-                 version: "0.8.3", keywords: ["http","client","binary"],
-                 dependencies: ["mimetypes"],
+                 version: "0.13.0", keywords: ["http","client","binary"],
+                 dependencies: ["idna""],
                  licenses: [[name: "Apache License, Version 2.0", file: "LICENSE"]],
                  contributors: [[name: "Adam Rutkowski",
                                  email: "hq@mtod.org"
@@ -58,8 +58,9 @@ Expm.Package.new(name: "hackney", description: "Simple HTTP client in Erlang",
                                 ],
                                 [name: "Ben Murphy",
                                  email: "benmmurphy@gmail.com"
-                                ]],
+                                ],
+                                [name: "Richard Jones",
+                                 email: "rj@metabrew.com"]],
                  maintainers: [[name: "Benoit Chesneau",
                                 email: "bchesneau@gmail.com"]],
-                 repositories: [[github: "benoitc/hackney", tag: "0.8.3"]])
-
+                 repositories: [[github: "benoitc/hackney", tag: "0.13.0"]])
