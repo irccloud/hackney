@@ -9,7 +9,7 @@
 
 -module(hackney_socks5).
 
--include_lib("kernel/src/inet_dns.hrl").
+%-include_lib("kernel/src/inet_dns.hrl").
 
 -export([messages/1,
          connect/3, connect/4,
