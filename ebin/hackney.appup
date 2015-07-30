@@ -1,0 +1,4 @@
+{"1.1.13.0",
+ [{"1.1.0", [{restart_application, hackney}]}],
+ [{"1.1.0", [{restart_application, hackney}]}]
+}.

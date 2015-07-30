@@ -1,4 +1,4 @@
-ebin
+*.app
 *.beam
 *.sw*
 deps
