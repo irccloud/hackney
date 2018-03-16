@@ -261,7 +261,7 @@ mp_data_header({Name, Len, {Disposition, Params}, ExtraHeaders}, Boundary) ->
 unique(Size) -> unique(Size, <<>>).
 unique(Size, Acc) when size(Acc) == Size -> Acc;
 unique(Size, Acc) ->
-  Random = $a + random:uniform($z - $a),
+  Random = $a + rand:uniform($z - $a),
   unique(Size, <<Acc/binary, Random>>).
 
 decode_form1(eof, [[]|Acc]) ->
